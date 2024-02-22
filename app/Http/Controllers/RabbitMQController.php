@@ -21,7 +21,7 @@ class RabbitMQController extends Controller
         $channel->close();
         $connection->close();
 
-        echo " [x] Message sent: Hello World Queue \n";
+        echo "Message published to RabbitMQ \n";
     }
 
     public function consumer()
@@ -35,12 +35,6 @@ class RabbitMQController extends Controller
         };
 
         $channel->basic_consume('pdf_log_queue', '', false, true, false, false, $callback);
-
-        try {
-            $channel->consume();
-        } catch (\Throwable $exception) {
-            Log::error($exception->getMessage());
-        }
 
         $channel->close();
         $connection->close();
